@@ -168,19 +168,17 @@ if [ $trivyConfig ]; then
    echo "2Running Trivy with trivy.yaml config from: " $trivyConfig
    trivy --config $trivyConfig ${scanType} ${artifactRef}
    returnCode=$?
+elif [[ "${format}" == "sarif" ]]; then
+  # SARIF is special. We output all vulnerabilities,
+  # regardless of severity level specified in this report.
+  # This is a feature, not a bug :)
+  echo "Building SARIF report with options: ${SARIF_ARGS}" "${artifactRef}"
+  trivy --quiet ${scanType} --format sarif --output ${output} $SARIF_ARGS ${artifactRef}
 else
    echo "2Running trivy with options: trivy ${scanType} ${ARGS}" "${artifactRef}"
    echo "Global options: " "${GLOBAL_ARGS}"
    trivy $GLOBAL_ARGS ${scanType} ${ARGS} ${artifactRef}
    returnCode=$?
-fi
-
-# SARIF is special. We output all vulnerabilities,
-# regardless of severity level specified in this report.
-# This is a feature, not a bug :)
-if [[ "${format}" == "sarif" ]]; then
-  echo "Building SARIF report with options: ${SARIF_ARGS}" "${artifactRef}"
-  trivy --quiet ${scanType} --format sarif --output ${output} $SARIF_ARGS ${artifactRef}
 fi
 
 if [[ "${format}" == "github" ]]; then
