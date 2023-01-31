@@ -68,6 +68,9 @@ while getopts "a:b:c:d:e:f:g:h:i:j:k:l:m:n:o:p:q:r:s:t:u:v:" o; do
        v)
          export trivyConfig=${OPTARG}
        ;;
+       v)
+         export limitSeveritiesForSARIF=${OPTARG}
+       ;;
   esac
 done
 
@@ -164,18 +167,18 @@ if [ "$skipFiles" ];then
 fi
 
 trivyConfig=$(echo $trivyConfig | tr -d '\r')
-if [ $trivyConfig ]; then
-   echo "2Running Trivy with trivy.yaml config from: " $trivyConfig
-   trivy --config $trivyConfig ${scanType} ${artifactRef}
-   returnCode=$?
-elif [[ "${format}" == "sarif" ]]; then
+if [[ "${format}" == "sarif" ] && [ "$limitSeveritiesForSARIF" != "true" ] ]; then
   # SARIF is special. We output all vulnerabilities,
   # regardless of severity level specified in this report.
   # This is a feature, not a bug :)
   echo "Building SARIF report with options: ${SARIF_ARGS}" "${artifactRef}"
   trivy --quiet ${scanType} --format sarif --output ${output} $SARIF_ARGS ${artifactRef}
+elif [ $trivyConfig ]; then
+   echo "Running Trivy with trivy.yaml config from: " $trivyConfig
+   trivy --config $trivyConfig ${scanType} ${artifactRef}
+   returnCode=$?
 else
-   echo "2Running trivy with options: trivy ${scanType} ${ARGS}" "${artifactRef}"
+   echo "Running trivy with options: trivy ${scanType} ${ARGS}" "${artifactRef}"
    echo "Global options: " "${GLOBAL_ARGS}"
    trivy $GLOBAL_ARGS ${scanType} ${ARGS} ${artifactRef}
    returnCode=$?
