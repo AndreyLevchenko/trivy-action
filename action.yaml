@@ -118,4 +118,4 @@ runs:
     - '-t ${{ inputs.trivyignores }}'
     - '-u ${{ inputs.github-pat }}'
     - '-v ${{ inputs.trivy-config }}'
-    - '-z ${{limit-severities-for-sarif }}'
+    - '-z ${{ inputs.limit-severities-for-sarif }}'
