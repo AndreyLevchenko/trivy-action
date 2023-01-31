@@ -166,7 +166,7 @@ if [ "$skipFiles" ];then
   done
 fi
 
-echo "limitSeveritiesForSARIF: ${limitSeveritiesForSARIF}"
+echo "limitSeveritiesForSARIF: <${limitSeveritiesForSARIF}>"
 
 trivyConfig=$(echo $trivyConfig | tr -d '\r')
 if [ "${format}" == "sarif" ] && [ "${limitSeveritiesForSARIF}" != "true" ]; then
