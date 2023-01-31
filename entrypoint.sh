@@ -84,8 +84,10 @@ input=$(echo $input | tr -d '\r')
 if [ $input ]; then
   artifactRef="--input $input"
 fi
+#trim leading spaces for boolean params
 ignoreUnfixed=$(echo $ignoreUnfixed | tr -d '\r')
 hideProgress=$(echo $hideProgress | tr -d '\r')
+limitSeveritiesForSARIF=$(echo $limitSeveritiesForSARIF | tr -d '\r')
 
 GLOBAL_ARGS=""
 if [ $cacheDir ];then
