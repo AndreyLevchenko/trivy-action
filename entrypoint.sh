@@ -68,7 +68,7 @@ while getopts "a:b:c:d:e:f:g:h:i:j:k:l:m:n:o:p:q:r:s:t:u:v:" o; do
        v)
          export trivyConfig=${OPTARG}
        ;;
-       v)
+       z)
          export limitSeveritiesForSARIF=${OPTARG}
        ;;
   esac
@@ -167,7 +167,7 @@ if [ "$skipFiles" ];then
 fi
 
 trivyConfig=$(echo $trivyConfig | tr -d '\r')
-if [[ "${format}" == "sarif" ] && [ "$limitSeveritiesForSARIF" != "true" ] ]; then
+if [ "${format}" == "sarif" ] && [ "$limitSeveritiesForSARIF" != "true" ]; then
   # SARIF is special. We output all vulnerabilities,
   # regardless of severity level specified in this report.
   # This is a feature, not a bug :)
