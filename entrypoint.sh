@@ -168,9 +168,6 @@ if [ "$skipFiles" ];then
   done
 fi
 
-echo "limitSeveritiesForSARIF: <${limitSeveritiesForSARIF}>"
-echo "hideProgress: <${hideProgress}>"
-
 trivyConfig=$(echo $trivyConfig | tr -d '\r')
 if [ "${format}" == "sarif" ] && [ "${limitSeveritiesForSARIF}" != "true" ]; then
   # SARIF is special. We output all vulnerabilities,
