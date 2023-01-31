@@ -165,11 +165,11 @@ fi
 
 trivyConfig=$(echo $trivyConfig | tr -d '\r')
 if [ $trivyConfig ]; then
-   echo "Running Trivy with trivy.yaml config from: " $trivyConfig
+   echo "2Running Trivy with trivy.yaml config from: " $trivyConfig
    trivy --config $trivyConfig ${scanType} ${artifactRef}
    returnCode=$?
 else
-   echo "Running trivy with options: trivy ${scanType} ${ARGS}" "${artifactRef}"
+   echo "2Running trivy with options: trivy ${scanType} ${ARGS}" "${artifactRef}"
    echo "Global options: " "${GLOBAL_ARGS}"
    trivy $GLOBAL_ARGS ${scanType} ${ARGS} ${artifactRef}
    returnCode=$?
