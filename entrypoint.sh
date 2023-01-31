@@ -167,7 +167,7 @@ if [ "$skipFiles" ];then
 fi
 
 trivyConfig=$(echo $trivyConfig | tr -d '\r')
-if [ "${format}" == "sarif" ] && [ "$limitSeveritiesForSARIF" != "true" ]; then
+if [ "${format}" == "sarif" ] && [ "${limitSeveritiesForSARIF}" != "true" ]; then
   # SARIF is special. We output all vulnerabilities,
   # regardless of severity level specified in this report.
   # This is a feature, not a bug :)
